@@ -24,11 +24,7 @@ io.on('connection', (socket) => {
         console.log('createMessage', message);
         io.emit('newMessage', generateMessage(message.from, message.text));
        callback();
-        // socket.broadcast.emit('newMessage', {
-        //     from: message.from,
-        //     text: message.text,
-        //     createdAt: new Date().getTime()
-        // });
+    
     });
 
     socket.on('disconnect', () => {
