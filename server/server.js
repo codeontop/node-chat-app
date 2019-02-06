@@ -3,10 +3,10 @@ const http = require('http');
 const express = require('express');
 const socketIO = require('socket.io');
 
-const generateMessage = require('./utils/message');
-const isRealString = require('./utils/validation');
+const { generateMessage } = require('./utils/message');
+const { isRealString } = require('./utils/validation');
 
-const Users = require('./utils/users');
+const { Users } = require('./utils/users');
 
 const publicPath = path.join(__dirname, '../public');
 const port = process.env.PORT || 3000;
@@ -45,7 +45,12 @@ io.on('connection', socket => {
   });
 
   socket.on('disconnect', () => {
-    console.log('Disconnected from the server');
+    var user = users.removeUser(socket.id);
+
+    if (user) {
+      io.to(user.room).emit('updateUserList', users.getUSerList(user.room));
+      io.to(user.room).emit('newMessage', generateMessage('Admin', `${user.name} has left.`));
+    }
   });
 });
 

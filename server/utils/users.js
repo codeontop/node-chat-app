@@ -1,36 +1,42 @@
-[{
-    id:'/sfrgfnrdf',
+[
+  {
+    id: '/sfrgfnrdf',
     name: 'Andrew',
     room: 'The Office Fans'
-}]
+  }
+];
 
-class Users{
-    constructor () {
-        this.users = [];
-    }
-    addUser(id, name, room){
-        var user = {id, name, room};
-        this.users.push(user);
-        return user;
-    }
-    removeUser (id) {
-        var user = this.getUser(id);
+class Users {
+  constructor() {
+    this.users = [];
+  }
 
-        if (user) {
-            this.users = this.users.filter((user) => user.id!== id);
-        }
+  addUser(id, name, room) {
+    var user = { id, name, room };
+    this.users.push(user);
+    return user;
+  }
 
-        return user;
-    }
-    getUser (id) {
-        return this.users.filter((user) => user.id === id)[0]
-    }
-    getUSerList (room){
-        var users = this.users.filter((user) => user.room === room);
-        var namesArray = users.map((user) => user.name);
+  removeUser(id) {
+    var user = this.getUser(id);
 
-        return namesArray;
+    if (user) {
+      this.users = this.users.filter(user => user.id !== id);
     }
+
+    return user;
+  }
+
+  getUser(id) {
+    return this.users.filter(user => user.id === id)[0];
+  }
+
+  getUSerList(room) {
+    var users = this.users.filter(user => user.room === room);
+    var namesArray = users.map(user => user.name);
+
+    return namesArray;
+  }
 }
 
-module.exports = Users;
+module.exports = { Users };
