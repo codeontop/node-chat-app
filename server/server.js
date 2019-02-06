@@ -39,8 +39,11 @@ io.on('connection', socket => {
     callback();
   });
   socket.on('createMessage', (message, callback) => {
-    console.log('createMessage', message);
-    io.emit('newMessage', generateMessage(message.from, message.text));
+    var user = users.getUser(socket.id);
+    console.log(user);
+    if (user && isRealString(message.text)) {
+      io.to(user.room).emit('newMessage', generateMessage(user.name, message.text));
+    }
     callback();
   });
 
